@@ -1,6 +1,8 @@
 # Page Loader
 
 [![Actions Status](https://github.com/zluuba/python-pytest-testing-project-79/workflows/hexlet-check/badge.svg)](https://github.com/zluuba/python-pytest-testing-project-79/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0cbfde9727e9324247e8/maintainability)](https://codeclimate.com/github/zluuba/page-loader/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/0cbfde9727e9324247e8/test_coverage)](https://codeclimate.com/github/zluuba/page-loader/test_coverage)
 
 Page Loader is a library that knows how to download pages over the network and save them to the local drive. <br>
 **This is a study project**, so it's not too useful for humanity, but useful for me. <br>
