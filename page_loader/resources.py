@@ -43,5 +43,5 @@ def download_resource(resource, folder):
         with open(filename, 'wb') as handler:
             handler.write(img_data)
             # print("Successfully downloaded: ", filename)
-    else:
-        print("Image Couldn't be retrieved")
+    # else:
+    #     print("Image Couldn't be retrieved")
