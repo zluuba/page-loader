@@ -1,19 +1,30 @@
-from page_loader.common import get_filename, get_file_path
-# import requests
+from common import get_html_filename
+from resources import get_resources
+import validators
+import requests
+import os
 
 
-def download(url, path):
-    file_name = get_filename(url)
-    file_path = get_file_path(path)
-    full_path = file_path + file_name
+def download(url, path=None):
+    if not path:
+        path = os.getcwd()
+    if not validators.url(url):
+        # print('Incorrect URL')
+        return None
 
-    # response = requests.get(url, stream=True, timeout=10)
     try:
-        print('\n' + 'All good, path: ')
-        # with open(full_path, 'wb') as file:
-        #     for data in response.iter_content():
-        #         file.write(data)
-    except PermissionError:
-        return f"Path {path} does not exist"
+        response = requests.get(url, stream=True, timeout=10)
+        if not response.ok:
+            raise ConnectionError
+    except (requests.exceptions.ConnectionError, ConnectionError):
+        # print("Bad connection")
+        return None
 
-    return full_path + '\n'
+    html_name = get_html_filename(url)
+    html_path = os.path.join(path, html_name)
+    html_page = get_resources(url, response.text, path)
+
+    with open(html_path, 'w') as file:
+        file.write(html_page)
+
+    return html_path

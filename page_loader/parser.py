@@ -4,6 +4,7 @@ import argparse
 def parse_args():
     parser = argparse.ArgumentParser(
         prog='page-loader',
+        usage='[options] <dir path> <url>',
         description='Download pages from network '
                     'and save them to the local drive.'
     )

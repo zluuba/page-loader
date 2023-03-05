@@ -1,29 +1,35 @@
 from urllib.parse import urlparse
-import os.path
+import os
 
 
-FILE_EXTENSION = '.html'
-
-
-def get_filename(url):
+def get_normalize_filename(url):
     parse_url = urlparse(url)
     netloc, url_path = parse_url.netloc, parse_url.path
-    file_name = netloc + url_path
+    filename = (netloc + url_path).strip('/')
 
-    while '.' in file_name or '/' in file_name:
-        file_name = file_name.replace('.', '-')
-        file_name = file_name.replace('/', '-')
+    normalize_filename = ''
+    for char in filename:
+        if not char.isalpha() and not char.isnumeric():
+            char = '-'
+        normalize_filename += char
 
-    file_name += FILE_EXTENSION
-    return file_name
+    return normalize_filename
 
 
-def get_file_path(path):
-    if path:
-        if path[-1] != '/':
-            path += '/'
+def get_resource_filename(url):
+    url, file_extension = os.path.splitext(url)
+    if not file_extension:
+        file_extension = '.html'
 
-    curr_dir = os.getcwd()
-    file_path = os.path.join(curr_dir, path)
+    filename = get_normalize_filename(url)
+    return f'{filename}{file_extension}'
 
-    return file_path
+
+def get_dir_name(url):
+    filename = get_normalize_filename(url)
+    return f'{filename}_files'
+
+
+def get_html_filename(url):
+    filename = get_normalize_filename(url)
+    return f'{filename}.html'
