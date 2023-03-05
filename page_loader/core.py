@@ -1,5 +1,5 @@
-from common import get_html_filename
-from resources import get_resources
+from page_loader.common import get_html_filename
+from page_loader.resources import get_resources
 import validators
 import requests
 import os

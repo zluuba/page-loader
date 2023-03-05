@@ -1,5 +1,5 @@
+from page_loader.common import get_resource_filename, get_dir_name
 from urllib.parse import urlparse, urljoin
-from common import get_resource_filename, get_dir_name
 from bs4 import BeautifulSoup
 import requests
 import os
