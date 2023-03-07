@@ -3,7 +3,7 @@ from page_loader import parser
 
 
 def main():
-    output, url = parser.parse_args()
+    url, output = parser.parse_args()
     return download(url, output)
 
 
