@@ -1,7 +1,6 @@
-from page_loader.common import get_resource_filename, get_dir_name
+from page_loader.common import get_resource_filename
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
-import requests
 import os
 
 
@@ -24,24 +23,8 @@ def get_resources(url, html_page, out_folder):
 
             filename = get_resource_filename(link)
             resources.append({'url': link, 'filename': filename})
-            outpath = os.path.join(out_folder, filename)
-            content[attr] = outpath
+            output_path = os.path.join(out_folder, filename)
+            content[attr] = output_path
 
-    folder = os.path.join(out_folder, get_dir_name(url))
-    [download_resource(resource, folder) for resource in resources]
     html_page = bs.prettify()
-    return html_page
-
-
-def download_resource(resource, folder):
-    # update folder path for downloading
-    url, filename = resource['url'], resource['filename']
-    response = requests.get(url, stream=True)
-    if response.ok:
-        img_data = response.content
-        # change filename to folder
-        with open(filename, 'wb') as handler:
-            handler.write(img_data)
-            # print("Successfully downloaded: ", filename)
-    # else:
-    #     print("Image Couldn't be retrieved")
+    return html_page, resources
