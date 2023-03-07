@@ -1,8 +1,12 @@
-.idea/
-.venv/
 dist/
+.venv/
+
+*.log
 
 .coverage
 coverage.xml
 
 .pytest_cache/
+
+.idea/
+.DS_Store
