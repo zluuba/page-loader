@@ -28,8 +28,3 @@ def get_resource_filename(url):
 def get_dir_name(url):
     filename = get_normalize_filename(url)
     return f'{filename}_files'
-
-
-def get_html_filename(url):
-    filename = get_normalize_filename(url)
-    return f'{filename}.html'
