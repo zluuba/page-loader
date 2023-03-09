@@ -5,7 +5,7 @@ import os
 def get_normalize_filename(url):
     parse_url = urlparse(url)
     netloc, url_path = parse_url.netloc, parse_url.path
-    filename = (netloc + url_path).strip('/')
+    filename, _ = os.path.splitext(netloc + url_path)
 
     normalize_filename = ''
     for char in filename:
@@ -17,7 +17,7 @@ def get_normalize_filename(url):
 
 
 def get_resource_filename(url):
-    url, file_extension = os.path.splitext(url)
+    file_extension = os.path.splitext(url)[-1]
     if not file_extension:
         file_extension = '.html'
 
