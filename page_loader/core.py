@@ -10,6 +10,10 @@ import os
 logger = get_logger(__name__)
 
 
+class AppError(Exception):
+    pass
+
+
 def download(url, path):
     validate_user_input(url, path)
     logger.info(f"requested url: {url}")

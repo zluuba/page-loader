@@ -1,4 +1,5 @@
 from page_loader.validator import validate_user_input, get_valid_response
+import page_loader.core
 import responses
 import pytest
 
@@ -17,7 +18,7 @@ def test_validate_user_input(user_inputs):
 
 @responses.activate
 def test_get_valid_response(main_page):
-    with pytest.raises(SystemExit):
+    with pytest.raises(page_loader.core.AppError):
         responses.add(responses.GET, main_page['url'], status=404)
         get_valid_response(main_page['url'])
 
