@@ -27,11 +27,13 @@ def get_valid_response(url):
         response.raise_for_status()
 
         status_code = response.status_code
-
         logger.info(f"status code: {status_code}")
 
-    except requests.exceptions.RequestException as error:
-        logger.critical(f"{error}, url: {url}")
+        if 300 <= status_code < 600:
+            raise ConnectionError
+
+    except (requests.exceptions.RequestException, ConnectionError) as error:
+        logger.error(f"{error}, url: {url}")
         sys.exit(1)
 
     return response
