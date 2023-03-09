@@ -1,6 +1,7 @@
 # Page Loader
 
 [![Actions Status](https://github.com/zluuba/python-pytest-testing-project-79/workflows/hexlet-check/badge.svg)](https://github.com/zluuba/python-pytest-testing-project-79/actions)
+[![Actions Status](https://github.com/zluuba/page-loader/workflows/project-check/badge.svg)](https://github.com/zluuba/page-loader/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0cbfde9727e9324247e8/maintainability)](https://codeclimate.com/github/zluuba/page-loader/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/0cbfde9727e9324247e8/test_coverage)](https://codeclimate.com/github/zluuba/page-loader/test_coverage)
 
@@ -22,7 +23,7 @@ Project is not ready yet <br>
 [//]: # ()
 [//]: # (- [python]&#40;https://www.python.org/&#41;, version 3.9 or higher)
 
-[//]: # (- [poetry]&#40;https://python-poetry.org/docs/#installation&#41;, version 1.0.0 or higher)
+[//]: # (- [poetry]&#40;https://python-poetry.org/docs/#installation&#41;, version 1.2.0 or higher)
 
 [//]: # ()
 [//]: # (### Installation)
