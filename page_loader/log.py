@@ -30,6 +30,6 @@ def get_logger(name):
     info_handler = Handler()
     logger.addHandler(info_handler.set_handler())
 
-    error_handler = Handler(stream=sys.stderr, level='ERROR')
-    logger.addHandler(error_handler.set_handler())
+    # error_handler = Handler(stream=sys.stderr, level='ERROR')
+    # logger.addHandler(error_handler.set_handler())
     return logger
