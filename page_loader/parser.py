@@ -1,16 +1,17 @@
 import argparse
+import os
 
 
 def parse_args():
+    default_path = os.getcwd()
     parser = argparse.ArgumentParser(
         prog='page-loader',
-        description='Download pages from network '
-                    'and save them to the local drive.'
+        description='Download web pages and save them to the local drive'
     )
-    parser.add_argument('URL')
+    parser.add_argument('url')
     parser.add_argument('-o', '--output',
-                        help='set path for saving downloaded file',
-                        default='')
+                        help=f"output directory (default: '{default_path}')",
+                        default=default_path)
 
     args = parser.parse_args()
-    return args.URL, args.output
+    return args.url, args.output

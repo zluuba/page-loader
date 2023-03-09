@@ -1,4 +1,4 @@
-from page_loader.common import get_resource_filename
+from page_loader.naming import get_resource_filename
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 import os
