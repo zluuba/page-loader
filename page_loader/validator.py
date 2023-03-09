@@ -18,10 +18,8 @@ def validate_user_input(url, path):
 def get_valid_response(url):
     try:
         response = requests.get(url, stream=True, timeout=10)
-        if not response.ok:
-            raise ConnectionError
 
-    except (requests.exceptions.ConnectionError, ConnectionError) as error:
+    except requests.exceptions.ConnectionError as error:
         sys.exit(f"Connection error: {error}. "
                  "Try again later or check that the URL is working correct.")
 
