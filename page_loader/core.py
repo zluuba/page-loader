@@ -12,7 +12,7 @@ logger = get_logger(__name__)
 
 def download(url, path):
     validate_user_input(url, path)
-    logger.info(f"requested url: {url}")v
+    logger.info(f"requested url: {url}")
     logger.info(f"output path: {path}")
 
     response = get_valid_response(url)
