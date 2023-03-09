@@ -5,7 +5,14 @@ description = "Download pages from network and save them to the local drive."
 authors = ["zluuba <zluyba.nikitina@gmail.com>"]
 license = "Proprietary"
 readme = "README.md"
+repository = "https://github.com/zluuba/page-loader"
 packages = [{include = "page_loader"}]
+classifiers = [
+    "Environment :: Console",
+    "Topic :: Utilities",
+    "Natural Language :: English",
+    "Programming Language :: Python"
+]
 
 [tool.poetry.scripts]
 page-loader = "page_loader.scripts.page_loader:main"
@@ -23,7 +30,8 @@ flake8 = "^6.0.0"
 pytest-cov = "^4.0.0"
 pyfakefs = "^5.1.0"
 pytest = "^7.2.2"
+requests-mock = "^1.10.0"
 
 [build-system]
-requires = ["poetry-core>=1.1.0a6"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
