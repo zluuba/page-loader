@@ -28,12 +28,12 @@ def get_valid_response(url):
         if 300 <= status_code < 600:
             logger.debug(f'connection error: {status_code}')
             raise ConnectionError(
-                "Need further action to complete the request",
+                "Bad request",
                 url
             )
 
     except (requests.exceptions.ConnectionError, ConnectionError) as error:
-        logger.critical(f"{error.args[0]}, url: {error.args[1]}")
+        # logger.critical(f"{error.args[0]}, url: {error.args[1]}")
         sys.exit(1)
 
     return response
