@@ -1,42 +1,26 @@
-from page_loader.common import get_resource_filename, get_dir_name
+from page_loader.naming import get_resource_filename, get_dir_name
+from page_loader.validator import validate_user_input, get_valid_response
 from page_loader.resources import get_resources
-import validators
+from progress.bar import IncrementalBar
+from page_loader.log import get_logger
 import requests
-import logging
-import sys
 import os
 
 
-def download(url, path=None):
-    if not path:
-        path = os.getcwd()
+logger = get_logger(__name__)
 
-    if not os.path.exists(path) or not os.path.isdir(path):
-        raise FileExistsError("Directory doesn't exist.")
 
-    if not os.access(path, os.W_OK):
-        raise PermissionError(f"You don't have access to write in: {path}")
+def download(url, path):
+    validate_user_input(url, path)
+    logger.info(f"requested url: {url}")v
+    logger.info(f"output path: {path}")
 
-    if not validators.url(url):
-        raise ValueError(f"Incorrect url: {url}")
-
-    logging.info(f"user input. url: {url}, path: {path}")
-
-    try:
-        response = requests.get(url, stream=True, timeout=10)
-        status_code = response.status_code
-        logging.info(f"response status code: {status_code}")
-        if not response.ok:
-            raise ConnectionError
-
-    except (requests.exceptions.ConnectionError, ConnectionError) as error:
-        sys.exit(f"Connection error: {error}. "
-                 "Try again later or check that the URL is working correct.")
+    response = get_valid_response(url)
 
     resources_dir_name = get_dir_name(url)
     resources_dir_path = os.path.join(path, resources_dir_name)
 
-    html_name = get_resource_filename(url)
+    html_name = get_resource_filename(url + '.html')
     html_path = os.path.join(path, html_name)
 
     html_page, resources = get_resources(url, response.text, path)
@@ -44,29 +28,28 @@ def download(url, path=None):
     with open(html_path, 'w') as file:
         file.write(html_page)
 
-    logging.info(f"html-page was downloaded. path: {html_path}")
+    logger.info(f"write html file: {html_path}")
 
     if resources:
-        if not os.path.exists(resources_dir_path):
-            os.mkdir(resources_dir_path)
-
-        logging.info(f"start download resources to {resources_dir_path}")
-        for resource in resources:
-            url = resource['url']
-            filename = resource['filename']
-            resource_path = os.path.join(resources_dir_path, filename)
-            download_resource(url, resource_path)
-            logging.info(f"start download {filename}. url: {url}")
+        download_resources(resources_dir_path, resources)
 
     return html_path
 
 
-def download_resource(url, path):
-    response = requests.get(url, stream=True)
-    if response.ok:
-        data = response.content
-        with open(path, 'wb') as file:
-            file.write(data)
-        logging.info(f"resource was successfully downloaded: '{path}'")
-    else:
-        logging.error(f"response error: {response.status_code}")
+def download_resources(resources_dir_path, resources):
+    if not os.path.exists(resources_dir_path):
+        logger.info(f"create directory for assets: {resources_dir_path}")
+        os.mkdir(resources_dir_path)
+
+    for resource in IncrementalBar('Downloading: ').iter(resources):
+        url, filename = resource['url'], resource['filename']
+        path = os.path.join(resources_dir_path, filename)
+
+        response = requests.get(url, stream=True)
+        if response.ok:
+            data = response.content
+            with open(path, 'wb') as file:
+                file.write(data)
+        else:
+            logger.error(f"can't download file: {url}.\n"
+                         f"{response.status_code}.")
