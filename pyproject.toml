@@ -27,10 +27,12 @@ progress = "^1.6"
 flake8 = "^6.0.0"
 pytest-cov = "^4.0.0"
 pyfakefs = "^5.1.0"
-pytest = "^7.2.2"
+pytest = "^6.2.5"
 requests-mock = "^1.10.0"
 
 #[tool.poetry.group.dev.dependencies]
+# group dev dependencies has been moved to dependencies
+# due to problems with the hexlet workflow
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
