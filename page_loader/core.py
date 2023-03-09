@@ -32,6 +32,8 @@ def download(url, path):
 
     if resources:
         download_resources(resources_dir_path, resources)
+    else:
+        logger.info("No possible resources to download")
 
     return html_path
 

@@ -37,6 +37,8 @@ def get_valid_response(url):
     try:
         response = requests.get(url, stream=True, timeout=10)
         status_code = response.status_code
+        
+        logger.debug(f"status code: {status_code}")
         if 300 <= status_code < 400:
             raise RedirectError(
                 "Need further action to complete the request",
