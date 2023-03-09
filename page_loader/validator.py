@@ -2,8 +2,8 @@ from page_loader.log import get_logger
 import page_loader.core
 import validators
 import requests
-import sys
 import os
+
 
 logger = get_logger(__name__)
 
@@ -11,15 +11,21 @@ logger = get_logger(__name__)
 def validate_user_input(url, path):
     if not os.path.exists(path) or not os.path.isdir(path):
         logger.critical("Directory not exists")
-        sys.exit(1)
+        raise page_loader.core.AppError(
+            "Directory not exists"
+        )
 
     if not os.access(path, os.W_OK):
         logger.critical(f"Need permission to write in: {path}")
-        sys.exit(1)
+        raise page_loader.core.AppError(
+            "No access to path"
+        )
 
     if not validators.url(url):
         logger.critical(f"Invalid url: {url}")
-        sys.exit(1)
+        raise page_loader.core.AppError(
+            "Invalid URL"
+        )
 
 
 def get_valid_response(url):

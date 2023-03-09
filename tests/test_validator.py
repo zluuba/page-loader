@@ -7,11 +7,11 @@ import pytest
 def test_validate_user_input(user_inputs):
     wrong, correct = user_inputs['wrong'], user_inputs['correct']
 
-    with pytest.raises(SystemExit) as invalid_url:
+    with pytest.raises(page_loader.core.AppError) as invalid_url:
         validate_user_input(wrong['url'], correct['path'])
         assert f"Incorrect url: {wrong['url']}" in str(invalid_url.value)
 
-    with pytest.raises(SystemExit) as invalid_path:
+    with pytest.raises(page_loader.core.AppError) as invalid_path:
         validate_user_input(correct['url'], wrong['path'])
         assert f"Directory doesn't exist: {wrong['path']}." in str(invalid_path.value)
 
