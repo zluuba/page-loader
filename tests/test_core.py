@@ -1,4 +1,5 @@
-from page_loader.core import download, download_resources
+from page_loader.core import download
+from page_loader.resources import download_resources
 import os
 
 

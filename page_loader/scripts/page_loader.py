@@ -1,6 +1,6 @@
 from page_loader.core import download
 from page_loader import parser
-import page_loader.core
+import page_loader.validator
 import sys
 
 
@@ -10,7 +10,7 @@ def main():
         saved_page_path = download(url, output)
         print(f"Page was downloaded as '{saved_page_path}'")
         sys.exit(0)
-    except (Exception, page_loader.core.AppError) as error:
+    except (Exception, page_loader.validator.AppError) as error:
         print(f"Sorry, but app cannot run, error: {error}")
         sys.exit(1)
 

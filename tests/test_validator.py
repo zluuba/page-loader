@@ -1,5 +1,5 @@
 from page_loader.validator import validate_user_input, get_valid_response
-import page_loader.core
+from page_loader.validator import AppError
 import responses
 import pytest
 
@@ -7,18 +7,18 @@ import pytest
 def test_validate_user_input(user_inputs):
     wrong, correct = user_inputs['wrong'], user_inputs['correct']
 
-    with pytest.raises(page_loader.core.AppError) as invalid_url:
+    with pytest.raises(AppError) as invalid_url:
         validate_user_input(wrong['url'], correct['path'])
         assert f"Incorrect url: {wrong['url']}" in str(invalid_url.value)
 
-    with pytest.raises(page_loader.core.AppError) as invalid_path:
+    with pytest.raises(AppError) as invalid_path:
         validate_user_input(correct['url'], wrong['path'])
         assert f"Directory doesn't exist: {wrong['path']}." in str(invalid_path.value)
 
 
 @responses.activate
 def test_get_valid_response(main_page):
-    with pytest.raises(page_loader.core.AppError):
+    with pytest.raises(AppError):
         responses.add(responses.GET, main_page['url'], status=404)
         get_valid_response(main_page['url'])
 
