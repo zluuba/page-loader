@@ -27,7 +27,9 @@ def download(url, path):
     html_name = get_resource_filename(url + '.html')
     html_path = os.path.join(path, html_name)
 
-    html_page, resources = get_resources(url, response.text, path)
+    html_page, resources = get_resources(
+        url, response.text, resources_dir_name
+    )
 
     with open(html_path, 'w') as file:
         file.write(html_page)

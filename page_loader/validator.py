@@ -40,7 +40,7 @@ def get_valid_response(url):
             raise ConnectionError
 
     except (requests.exceptions.RequestException, ConnectionError) as error:
-        logger.critical(f"{error}, url: {url}")
+        logger.critical(error)
         raise page_loader.core.AppError(
             "Network error! See log for more details."
         ) from error
