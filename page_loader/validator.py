@@ -9,28 +9,26 @@ class AppError(Exception):
 
 
 def validate_user_input(url, path):
+    if not validators.url(url):
+        page_loader.core.logger.critical(f"Invalid url: {url}")
+        raise AppError(f"Invalid URL: {url}")
+
     if not os.path.exists(path) or not os.path.isdir(path):
-        page_loader.core.logger.critical("Directory not exists")
-        raise AppError("Directory not exists")
+        page_loader.core.logger.critical(
+            f"Directory does not exists: {path}"
+        )
+        raise AppError(f"Directory does not exists: {path}")
 
     if not os.access(path, os.W_OK):
         page_loader.core.logger.critical(
             f"Need permission to write in: {path}"
         )
-        raise AppError("No access to path")
-
-    if not validators.url(url):
-        page_loader.core.logger.critical(f"Invalid url: {url}")
-        raise AppError("Invalid URL")
+        raise AppError(f"Have no write permission to path: {path}")
 
 
 def get_valid_response(url):
     try:
         response = requests.get(url)
-        page_loader.core.logger.info(
-            f'got a response: {response}, url: {url}'
-        )
-
         response.raise_for_status()
 
         if response.status_code >= 300:

@@ -13,9 +13,6 @@ def main():
     except page_loader.validator.AppError as error:
         print(f"Sorry, but app cannot run, error: {error}")
         sys.exit(1)
-    except Exception as error:
-        print(f"Unknown error: {error}")
-        sys.exit(1)
 
 
 if __name__ == '__main__':
