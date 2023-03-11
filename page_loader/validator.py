@@ -33,16 +33,15 @@ def get_valid_response(url):
         response = requests.get(url)
         response.raise_for_status()
 
-        status_code = response.status_code
-        # logger.info(f'got a {response} from {url}')
+        logger.info(f'got a response: {response}, url: {url}')
 
-        if 300 <= status_code < 600:
+        if not response.ok:
             raise ConnectionError
 
     except (requests.exceptions.RequestException, ConnectionError) as error:
         logger.critical(error)
         raise page_loader.core.AppError(
-            "Network error! See log for more details."
+            "Network error. See log for more details."
         ) from error
 
     return response
