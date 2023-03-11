@@ -29,10 +29,7 @@ def get_valid_response(url):
 
         response.raise_for_status()
 
-    except (requests.exceptions.ConnectionError,
-            requests.exceptions.HTTPError,
-            requests.exceptions.MissingSchema,
-            requests.exceptions.InvalidSchema) as error:
+    except requests.exceptions.RequestException as error:
         logger.critical(error)
         raise page_loader.core.AppError(
             "Network error. See log for more details."

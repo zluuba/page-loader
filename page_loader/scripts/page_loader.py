@@ -14,7 +14,7 @@ def main():
         saved_page_path = download(url, output)
         print(f"Page was downloaded as '{saved_page_path}'")
         sys.exit(0)
-    except page_loader.core.AppError as error:
+    except (Exception, page_loader.core.AppError) as error:
         print(f"Sorry, but app cannot run, error: {error}")
         sys.exit(1)
 

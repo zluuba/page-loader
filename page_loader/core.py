@@ -47,11 +47,7 @@ def download(url, path):
 def download_resources(resources_dir_path, resources):
     if not os.path.exists(resources_dir_path):
         logger.info(f"create directory for assets: {resources_dir_path}")
-        try:
-            os.mkdir(resources_dir_path)
-        except OSError as error:
-            logger.critical(f"Error: {error}. Can't create dir for resources")
-            raise AppError("Can't create dir for resources") from error
+        os.mkdir(resources_dir_path)
 
     for resource in IncrementalBar('Downloading: ').iter(resources):
         url, filename = resource['url'], resource['filename']
@@ -62,6 +58,3 @@ def download_resources(resources_dir_path, resources):
             data = response.content
             with open(path, 'wb') as file:
                 file.write(data)
-        else:
-            logger.error(f"can't download file: {url}.\n"
-                         f"{response.status_code}.")
