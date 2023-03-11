@@ -20,4 +20,4 @@ test-coverage:
 	poetry run pytest --cov=page_loader --cov-report xml
 
 #load:
-#	page-loader -o page_loader https://page-loader.hexlet.repl.co
+#	page-loader https://page-loader.hexlet.repl.co

@@ -1,13 +1,8 @@
 import logging.config
+from logging import FileHandler
 import sys
-# import os
 
-
-FORMAT = "%(levelname)s:%(message)s"
-# LOG_FILE = os.path.join(
-#     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-#     f'{__name__}.log'
-# )
+FORMAT = "%(levelname)s:%(name)s:%(message)s"
 
 
 class Handler:
@@ -27,9 +22,11 @@ def get_logger(name):
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
 
-    info_handler = Handler()
+    info_handler = Handler(level='DEBUG')
     logger.addHandler(info_handler.set_handler())
 
-    # error_handler = Handler(stream=sys.stderr, level='ERROR')
-    # logger.addHandler(error_handler.set_handler())
+    log_to_file_handler = FileHandler(__name__)
+    log_to_file_handler.setLevel('ERROR')
+    log_to_file_handler.setFormatter(logging.Formatter(FORMAT))
+    logger.addHandler(log_to_file_handler)
     return logger
