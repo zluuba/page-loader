@@ -4,8 +4,8 @@ from urllib.parse import urlparse, urljoin
 from progress.bar import IncrementalBar
 from bs4 import BeautifulSoup
 import page_loader.core
+import validators
 import requests
-import errno
 import os
 
 
@@ -42,17 +42,16 @@ def download_resources(resources_dir_path, resources):
             page_loader.core.logger.info(
                 f"create directory for assets: {resources_dir_path}"
             )
-        except OSError as exc:
-            if exc.errno != errno.EEXIST:
-                raise page_loader.validator.AppError() from exc
-            pass
+        except Exception as error:
+            raise page_loader.validator.AppError() from error
 
     for resource in IncrementalBar('Downloading: ').iter(resources):
         url, filename = resource['url'], resource['filename']
         path = os.path.join(resources_dir_path, filename)
 
-        response = requests.get(url, stream=True)
-        if response.ok:
-            data = response.content
-            with open(path, 'wb') as file:
-                file.write(data)
+        if validators.url(url):
+            response = requests.get(url, stream=True)
+            if response.ok:
+                data = response.content
+                with open(path, 'wb') as file:
+                    file.write(data)

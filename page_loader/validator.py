@@ -38,7 +38,7 @@ def get_valid_response(url):
                 "Network error. See log for more details."
             )
 
-    except (Exception, requests.exceptions.RequestException) as error:
+    except requests.exceptions.RequestException as error:
         page_loader.core.logger.critical(error)
         raise AppError(
             "Network error. See log for more details."

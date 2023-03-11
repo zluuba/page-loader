@@ -10,8 +10,11 @@ def main():
         saved_page_path = download(url, output)
         print(f"Page was downloaded as '{saved_page_path}'")
         sys.exit(0)
-    except (Exception, page_loader.validator.AppError) as error:
+    except page_loader.validator.AppError as error:
         print(f"Sorry, but app cannot run, error: {error}")
+        sys.exit(1)
+    except Exception as error:
+        print(f"Unknown error: {error}")
         sys.exit(1)
 
 

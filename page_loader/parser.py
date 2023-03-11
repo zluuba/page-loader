@@ -8,10 +8,10 @@ def parse_args():
         prog='page-loader',
         description='Download web pages and save them to the local drive'
     )
-    parser.add_argument('url', type=str)
+    parser.add_argument('url')
     parser.add_argument('-o', '--output',
                         help=f"output directory (default: '{default_path}')",
-                        default=default_path, type=str)
+                        default=default_path)
 
     args = parser.parse_args()
     return args.url, args.output
