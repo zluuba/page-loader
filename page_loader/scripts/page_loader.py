@@ -1,7 +1,11 @@
 from page_loader.core import download
+from page_loader.log import get_logger
 from page_loader import parser
 import page_loader.core
 import sys
+
+
+logger = get_logger(__name__)
 
 
 def main():
@@ -12,6 +16,10 @@ def main():
         sys.exit(0)
     except page_loader.core.AppError as error:
         print(f"Sorry, but app cannot run, error: {error}")
+        sys.exit(1)
+    except Exception as error:
+        logger.error(sys.exc_info())
+        print(f'Unknown error: {error}')
         sys.exit(1)
 
 
