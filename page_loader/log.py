@@ -6,7 +6,7 @@ FORMAT = "%(levelname)s:%(name)s:%(message)s"
 
 
 class Handler:
-    def __init__(self, stream=sys.stdout, level='INFO', formatter=FORMAT):
+    def __init__(self, stream=sys.stdout, level='NOTSET', formatter=FORMAT):
         self.stream = stream
         self.level = level
         self.formatter = formatter
