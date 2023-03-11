@@ -33,12 +33,12 @@ def get_valid_response(url):
 
         response.raise_for_status()
 
-        if 300 <= response.status_code < 600:
+        if response.status_code >= 300:
             raise AppError(
                 "Network error. See log for more details."
             )
 
-    except requests.exceptions.RequestException as error:
+    except (Exception, requests.exceptions.RequestException) as error:
         page_loader.core.logger.critical(error)
         raise AppError(
             "Network error. See log for more details."

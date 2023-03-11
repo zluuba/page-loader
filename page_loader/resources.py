@@ -1,9 +1,11 @@
 from page_loader.naming import get_resource_filename
+import page_loader.validator
 from urllib.parse import urlparse, urljoin
 from progress.bar import IncrementalBar
 from bs4 import BeautifulSoup
 import page_loader.core
 import requests
+import errno
 import os
 
 
@@ -35,10 +37,15 @@ def get_resources(url, html_page, out_folder):
 
 def download_resources(resources_dir_path, resources):
     if not os.path.exists(resources_dir_path):
-        os.mkdir(resources_dir_path)
-        page_loader.core.logger.info(
-            f"create directory for assets: {resources_dir_path}"
-        )
+        try:
+            os.mkdir(resources_dir_path)
+            page_loader.core.logger.info(
+                f"create directory for assets: {resources_dir_path}"
+            )
+        except OSError as exc:
+            if exc.errno != errno.EEXIST:
+                raise page_loader.validator.AppError() from exc
+            pass
 
     for resource in IncrementalBar('Downloading: ').iter(resources):
         url, filename = resource['url'], resource['filename']
