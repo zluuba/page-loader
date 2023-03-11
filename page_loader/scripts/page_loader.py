@@ -11,7 +11,6 @@ logger = get_logger(__name__)
 def main():
     try:
         url, output = parser.parse_args()
-        logger.info(f"Args: url: {url}, output: {output}")
         saved_page_path = download(url, output)
         print(f"Page was downloaded as '{saved_page_path}'")
         sys.exit(0)

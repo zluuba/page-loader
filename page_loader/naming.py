@@ -9,7 +9,7 @@ def get_normalize_filename(url):
 
     normalize_filename = ''
     for char in filename:
-        if not char.isalpha() and not char.isnumeric():
+        if not char.isalnum():
             char = '-'
         normalize_filename += char
 
