@@ -34,7 +34,7 @@ def get_valid_response(url):
         response.raise_for_status()
 
         status_code = response.status_code
-        logger.info(f'got a {response} from {url}')
+        # logger.info(f'got a {response} from {url}')
 
         if 300 <= status_code < 600:
             raise ConnectionError
