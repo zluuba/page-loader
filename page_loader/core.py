@@ -31,12 +31,8 @@ def download(url, path):
         url, response.text, resources_dir_name
     )
 
-    try:
-        with open(html_path, 'w') as file:
-            file.write(html_page)
-    except requests.exceptions.MissingSchema as error:
-        logger.critical(f'Can not save page: {html_path}.')
-        raise AppError('Can not save page') from error
+    with open(html_path, 'w') as file:
+        file.write(html_page)
 
     logger.info(f"write html file: {html_path}")
 
