@@ -9,7 +9,7 @@ def main():
         url, output = parser.parse_args()
         saved_page_path = download(url, output)
         print(f"Page was downloaded as '{saved_page_path}'")
-        sys.exit(2)
+        sys.exit(0)
     except page_loader.core.AppError as error:
         print(f"Sorry, but app cannot run, error: {error}")
         sys.exit(1)
