@@ -11,34 +11,25 @@ logger = get_logger(__name__)
 def validate_user_input(url, path):
     if not os.path.exists(path) or not os.path.isdir(path):
         logger.critical("Directory not exists")
-        raise page_loader.core.AppError(
-            "Directory not exists"
-        )
+        raise page_loader.core.AppError("Directory not exists")
 
     if not os.access(path, os.W_OK):
         logger.critical(f"Need permission to write in: {path}")
-        raise page_loader.core.AppError(
-            "No access to path"
-        )
+        raise page_loader.core.AppError("No access to path")
 
     if not validators.url(url):
         logger.critical(f"Invalid url: {url}")
-        raise page_loader.core.AppError(
-            "Invalid URL"
-        )
+        raise page_loader.core.AppError("Invalid URL")
 
 
 def get_valid_response(url):
     try:
         response = requests.get(url)
-        response.raise_for_status()
-
         logger.info(f'got a response: {response}, url: {url}')
 
-        if not response.ok:
-            raise ConnectionError
+        response.raise_for_status()
 
-    except (requests.exceptions.RequestException, ConnectionError) as error:
+    except requests.exceptions.RequestException as error:
         logger.critical(error)
         raise page_loader.core.AppError(
             "Network error. See log for more details."

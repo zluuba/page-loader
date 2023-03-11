@@ -31,8 +31,12 @@ def download(url, path):
         url, response.text, resources_dir_name
     )
 
-    with open(html_path, 'w') as file:
-        file.write(html_page)
+    try:
+        with open(html_path, 'w') as file:
+            file.write(html_page)
+    except requests.exceptions.MissingSchema as error:
+        logger.critical(f'Can not save page: {html_path}.')
+        raise AppError('Can not save page') from error
 
     logger.info(f"write html file: {html_path}")
 
@@ -47,7 +51,11 @@ def download(url, path):
 def download_resources(resources_dir_path, resources):
     if not os.path.exists(resources_dir_path):
         logger.info(f"create directory for assets: {resources_dir_path}")
-        os.mkdir(resources_dir_path)
+        try:
+            os.mkdir(resources_dir_path)
+        except OSError as error:
+            logger.critical(f"Error: {error}. Can't create dir for resources")
+            raise AppError("Can't create dir for resources") from error
 
     for resource in IncrementalBar('Downloading: ').iter(resources):
         url, filename = resource['url'], resource['filename']
