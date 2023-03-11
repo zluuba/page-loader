@@ -1,11 +1,7 @@
 from page_loader.core import download
-from page_loader.log import get_logger
 from page_loader import parser
 import page_loader.core
 import sys
-
-
-logger = get_logger(__name__)
 
 
 def main():

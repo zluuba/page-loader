@@ -3,7 +3,7 @@ from page_loader.validator import validate_user_input, get_valid_response
 from page_loader.resources import get_resources
 from progress.bar import IncrementalBar
 from page_loader.log import get_logger
-import requests
+# import requests
 import os
 
 
@@ -38,23 +38,20 @@ def download(url, path):
 
     if resources:
         download_resources(resources_dir_path, resources)
-    else:
-        logger.info("No possible resources to download")
 
     return html_path
 
 
 def download_resources(resources_dir_path, resources):
     if not os.path.exists(resources_dir_path):
-        logger.info(f"create directory for assets: {resources_dir_path}")
         os.mkdir(resources_dir_path)
+        logger.info(f"create directory for assets: {resources_dir_path}")
 
     for resource in IncrementalBar('Downloading: ').iter(resources):
         url, filename = resource['url'], resource['filename']
         path = os.path.join(resources_dir_path, filename)
 
-        response = requests.get(url, stream=True)
-        if response.ok:
-            data = response.content
-            with open(path, 'wb') as file:
-                file.write(data)
+        response = get_valid_response(url)
+        data = response.content
+        with open(path, 'wb') as file:
+            file.write(data)
